@@ -67,9 +67,22 @@ Thumbs.db
 # API keys (never commit these!)
 secrets.txt
 
+# User-generated data (feedback, history)
+data/
+
+# Internal development files
+IMPROVEMENT.md
+TEST_REPORT.md
+
+# Temporary test files
+test_full.py
+test_real_world.py
+demo.sh
+
 # Local documentation (not for repo)
 BLOG_POST.md
 MARKETING_MATERIALS.md
 PROJECT_SUMMARY.md
 RELEASE_CHECKLIST.md
+RELEASE_NOTES.md
 error-log-analyzer-FINAL.md
