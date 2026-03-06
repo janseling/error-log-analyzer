@@ -143,10 +143,6 @@ A: Yes! Supports local models via Ollama or any OpenAI-compatible API.
 **Q: What about sensitive data in logs?**
 A: All processing happens locally. Logs are never stored on external servers.
 
-## 🤝 Contributing
-
-Contributions welcome! See [CONTRIBUTING.md](CONTRIBUTING.md)
-
 ## 📝 License
 
 MIT License - see [LICENSE](LICENSE)
@@ -155,7 +151,7 @@ MIT License - see [LICENSE](LICENSE)
 
 - 💬 Discord: [OpenClaw Community](https://discord.gg/clawd)
 - 🐛 Issues: [GitHub Issues](https://github.com/janseling/error-log-analyzer/issues)
-- 📧 Email: support@maxgaan.com
+- 📧 **Email**: janseling@gmail.com
 
 ---
 

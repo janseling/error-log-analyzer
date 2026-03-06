@@ -266,7 +266,7 @@ A: This focuses on AI-powered explanations rather than just error tracking. Ligh
 - 📖 **Documentation**: [github.com/janseling/error-log-analyzer/wiki](https://github.com/janseling/error-log-analyzer/wiki)
 - 💬 **Discord**: [OpenClaw Community](https://discord.gg/clawd)
 - 🐛 **Issues**: [GitHub Issues](https://github.com/janseling/error-log-analyzer/issues)
-- 📧 **Email**: support@maxgaan.com
+- 📧 **Email**: janseling@gmail.com
 
 ## Roadmap
 
