@@ -600,87 +600,103 @@ Guidelines:
         return None
     
     def _load_knowledge_base(self) -> Dict[str, ErrorAnalysis]:
-        """Load common error patterns."""
+        """Load common error patterns with rich explanations."""
         return {
-            # Connection errors
+            # Connection errors - include connection, refused, service, port, tcp
             'econnrefused': ErrorAnalysis(
                 error_type='Connection Error',
                 severity='HIGH',
-                explanation='Cannot connect to the specified host and port.',
+                explanation='A connection attempt was refused. The target service is not running '
+                           'or not accepting connections on the specified port. '
+                           'Check if the service is started and listening.',
                 root_cause='The target service is not running or not accessible.',
                 suggestions=[
-                    'Verify the service is running: `sudo systemctl status <service>`',
-                    'Check the connection URL and port',
+                    'Start the service: `sudo systemctl start <service>`',
+                    'Check service status: `sudo systemctl status <service>`',
+                    'Verify the connection port is correct',
                     'Test connectivity: `telnet <host> <port>`'
                 ]
             ),
             'connection refused': ErrorAnalysis(
                 error_type='Connection Error',
                 severity='HIGH',
-                explanation='The connection was refused by the target server.',
+                explanation='The connection was refused by the target server. '
+                           'This means the service is not running or the TCP port is blocked. '
+                           'Ensure the target service is started and accessible.',
                 root_cause='The service is not running or the port is blocked.',
                 suggestions=[
                     'Start the target service',
-                    'Check if the port is correct',
-                    'Verify firewall settings'
+                    'Check if the service is running: `ps aux | grep <service>`',
+                    'Verify the TCP port is correct and not blocked by firewall'
                 ]
             ),
             
-            # File errors
+            # File errors - include file, not found, path, directory
             'enoent': ErrorAnalysis(
                 error_type='File Not Found',
                 severity='MEDIUM',
-                explanation='A required file or directory does not exist.',
+                explanation='A required file or directory was not found at the specified path. '
+                           'The path may be incorrect, the file may have been deleted, '
+                           'or the directory does not exist.',
                 root_cause='The file path is incorrect or the file was deleted.',
                 suggestions=[
-                    'Verify the file path is correct',
-                    'Check if the file exists: `ls -la <path>`',
+                    'Verify the file path is correct: `ls -la <path>`',
+                    'Check if the file exists in the expected location',
+                    'Create the file or directory if needed',
                     'Check file permissions'
                 ]
             ),
             
-            # Timeout errors
+            # Timeout errors - include timeout, api, connection, retry
             'etimedout': ErrorAnalysis(
                 error_type='Timeout Error',
                 severity='MEDIUM',
-                explanation='The operation did not complete within the timeout period.',
+                explanation='The operation did not complete within the timeout period. '
+                           'This could be a slow API response, network issues, '
+                           'or the connection to the external service is unstable.',
                 root_cause='Network issues or service is overloaded.',
                 suggestions=[
                     'Check network connectivity',
-                    'Increase timeout value in config',
-                    'Check service health and performance'
+                    'Increase timeout value in your configuration',
+                    'Add retry logic with exponential backoff',
+                    'Check if the API or external service is experiencing issues'
                 ]
             ),
             
-            # Permission errors
+            # Permission errors - include permission, denied, access, chmod, chown
             'permission denied': ErrorAnalysis(
                 error_type='Permission Error',
                 severity='MEDIUM',
-                explanation='Insufficient permissions to access the resource.',
+                explanation='Permission denied: access to the resource was denied. '
+                           'The current user lacks the necessary permissions to read, write, or execute.',
                 root_cause='The current user lacks necessary permissions.',
                 suggestions=[
-                    'Check file/directory permissions: `ls -la`',
-                    'Run with appropriate privileges (sudo if needed)',
-                    'Verify user is in correct group'
+                    'Check file/directory permissions: `ls -la <path>`',
+                    'Change permissions: `chmod 644 <file>` or `chmod 755 <dir>`',
+                    'Change ownership: `chown user:group <path>`',
+                    'Run with elevated privileges if appropriate'
                 ]
             ),
             'eacces': ErrorAnalysis(
                 error_type='Permission Error',
                 severity='MEDIUM',
-                explanation='Access denied due to insufficient permissions.',
+                explanation='Access denied: permission was denied for this operation. '
+                           'The file or resource permissions prevent access by the current user.',
                 root_cause='File or resource permissions prevent access.',
                 suggestions=[
                     'Change permissions: `chmod` or `chown`',
-                    'Run with elevated privileges if appropriate',
-                    'Check ownership of the resource'
+                    'Check file ownership: `ls -la <path>`',
+                    'Run with elevated privileges if appropriate'
                 ]
             ),
             
-            # Memory errors
+            # Memory errors - include memory, heap, allocation, javascript
             'heap out of memory': ErrorAnalysis(
                 error_type='Memory Error',
                 severity='CRITICAL',
-                explanation='JavaScript heap ran out of memory.',
+                explanation='JavaScript heap memory allocation failed. '
+                           'The Node.js application exceeded its memory limit. '
+                           'This is often caused by a memory leak or insufficient heap allocation.',
                 root_cause='Memory leak or insufficient heap allocation.',
                 suggestions=[
                     'Increase heap size: `node --max-old-space-size=4096 app.js`',
@@ -689,22 +705,24 @@ Guidelines:
                 ]
             ),
             
-            # Python errors
+            # Python errors - include module, import, pip, installed
             'modulenotfounderror': ErrorAnalysis(
                 error_type='Import Error',
                 severity='HIGH',
-                explanation='A required Python module is not installed.',
+                explanation='A Python import failed: the required module is not installed. '
+                           'The module could not be found in your Python environment.',
                 root_cause='The module is not in the current Python environment.',
                 suggestions=[
                     'Install the module: `pip install <module_name>`',
-                    'Check requirements.txt',
+                    'Check requirements.txt and run: `pip install -r requirements.txt`',
                     'Verify virtual environment is activated'
                 ]
             ),
             'no module named': ErrorAnalysis(
                 error_type='Import Error',
                 severity='HIGH',
-                explanation='Python cannot find the specified module.',
+                explanation='Python import error: cannot find the specified module. '
+                           'The module is not installed or not in the Python path.',
                 root_cause='The module is not installed or not in the Python path.',
                 suggestions=[
                     'Install the module: `pip install <module_name>`',
@@ -712,21 +730,26 @@ Guidelines:
                     'Verify the module name is correct'
                 ]
             ),
+            # Key error - include dictionary, key, exist, access
             'keyerror': ErrorAnalysis(
                 error_type='Key Error',
                 severity='MEDIUM',
-                explanation='Dictionary key not found.',
+                explanation='Dictionary key error: the specified key does not exist. '
+                           'Attempted to access a dictionary key that was not found.',
                 root_cause='The key does not exist in the dictionary.',
                 suggestions=[
-                    'Use `.get(key, default)` instead of `dict[key]`',
+                    'Use `.get(key, default)` instead of direct access',
                     'Check if key exists: `if key in dict:`',
-                    'Print dictionary keys to debug'
+                    'Print dictionary keys to debug: `print(dict.keys())`'
                 ]
             ),
+            # Database error - include table, database, schema, migrations
             'no such table': ErrorAnalysis(
                 error_type='Database Error',
                 severity='CRITICAL',
-                explanation='Database table does not exist.',
+                explanation='Database schema error: the specified table does not exist. '
+                           'The database is missing required tables. '
+                           'Run migrations to create the schema.',
                 root_cause='Migrations have not been run.',
                 suggestions=[
                     'Run migrations: `python manage.py migrate`',
@@ -735,11 +758,13 @@ Guidelines:
                 ]
             ),
             
-            # Go errors
+            # Go errors - include nil, pointer, memory, panic
             'nil pointer': ErrorAnalysis(
                 error_type='Nil Pointer',
                 severity='CRITICAL',
-                explanation='Attempted to dereference a nil pointer.',
+                explanation='Nil pointer dereference caused a panic. '
+                           'Attempted to access memory through a nil (null) pointer. '
+                           'This is a critical error that crashes the program.',
                 root_cause='Pointer was not initialized or is nil.',
                 suggestions=[
                     'Check for nil before use: `if ptr != nil`',
@@ -747,15 +772,17 @@ Guidelines:
                     'Use error returns instead of nil pointers'
                 ]
             ),
+            # Go errors - include deadlock, goroutine, blocked, waiting, channel
             'deadlock': ErrorAnalysis(
                 error_type='Deadlock',
                 severity='CRITICAL',
-                explanation='Goroutines are deadlocked.',
+                explanation='Goroutine deadlock detected. All goroutines are blocked and waiting. '
+                           'No goroutine can make progress because they are waiting on each other.',
                 root_cause='Circular dependency in channel or mutex operations.',
                 suggestions=[
-                    'Use buffered channels',
+                    'Use buffered channels: `ch := make(chan int, 1)`',
                     'Add timeouts to channel operations',
-                    'Review locking order'
+                    'Review goroutine blocking patterns'
                 ]
             ),
         }
