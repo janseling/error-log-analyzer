@@ -7,7 +7,7 @@ metadata:
   author: janseling
   tags: [developer-tools, error-tracking, logging, AI, debugging, monitoring]
   category: development-tools
-  repository: https://github.com/maxgaan/error-log-analyzer
+  repository: https://github.com/janseling/error-log-analyzer
   license: MIT
 ---
 
@@ -263,9 +263,9 @@ A: This focuses on AI-powered explanations rather than just error tracking. Ligh
 
 ## Support
 
-- 📖 **Documentation**: [github.com/maxgaan/error-log-analyzer/wiki](https://github.com/maxgaan/error-log-analyzer/wiki)
+- 📖 **Documentation**: [github.com/janseling/error-log-analyzer/wiki](https://github.com/janseling/error-log-analyzer/wiki)
 - 💬 **Discord**: [OpenClaw Community](https://discord.gg/clawd)
-- 🐛 **Issues**: [GitHub Issues](https://github.com/maxgaan/error-log-analyzer/issues)
+- 🐛 **Issues**: [GitHub Issues](https://github.com/janseling/error-log-analyzer/issues)
 - 📧 **Email**: support@maxgaan.com
 
 ## Roadmap
