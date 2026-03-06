@@ -118,17 +118,6 @@ How to fix it:
 - Filters duplicates
 - Identifies correlations
 
-## 💰 Pricing
-
-| Plan | Events/Month | Features | Price |
-|------|--------------|----------|-------|
-| **Starter** | 5,000 | AI explanations, pattern recognition | $39 one-time |
-| **Pro** | 50,000 | + Real-time monitoring, custom rules | $99 one-time |
-| **Team** | 200,000 | + Multi-user, priority support | $199 one-time |
-| **Enterprise** | Unlimited | + On-premise, custom integrations | Contact us |
-
-**Free trial**: 100 free error analyses
-
 ## ❓ FAQ
 
 **Q: Does this work offline?**

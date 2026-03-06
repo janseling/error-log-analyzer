@@ -3,7 +3,7 @@ name: error-log-analyzer
 description: AI-powered error log analyzer that explains errors in plain English and provides actionable fix suggestions. Supports Node.js, Python, and Go log formats.
 metadata:
   slug: janseling-error-log-analyzer
-  version: 1.0.0
+  version: 1.0.1
   author: janseling
   tags: [developer-tools, error-tracking, logging, AI, debugging, monitoring]
   category: development-tools
@@ -231,18 +231,6 @@ monitor = LogMonitor(
 
 monitor.start()
 ```
-
-## Pricing
-
-| Plan | Events/Month | Features | Price |
-|------|--------------|----------|-------|
-| **Starter** | 5,000 | AI explanations, pattern recognition | $39 one-time |
-| **Pro** | 50,000 | + Real-time monitoring, custom rules | $99 one-time |
-| **Team** | 200,000 | + Multi-user, priority support | $199 one-time |
-| **Enterprise** | Unlimited | + On-premise, custom integrations | Contact us |
-
-### Free Trial
-Get 100 free error analyses to test the skill. No credit card required.
 
 ## FAQ
 
